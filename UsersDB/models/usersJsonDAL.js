@@ -1,5 +1,6 @@
 const jsonfile = require('jsonfile');
-const usersPath = 'C:\\Users\\elada\\OneDrive\\שולחן העבודה\\Full Stack Web Course\\Fullstack Final Project\\UsersDB\\Users.json';
+const usersPath =
+	'C:\\Users\\elada\\OneDrive\\שולחן העבודה\\Full Stack Web Course\\Fullstack Final Project\\Cinema-Website-Project\\UsersDB\\Users.json';
 
 const getAllJsonUsers = () => {
 	return new Promise((resolve, reject) => {

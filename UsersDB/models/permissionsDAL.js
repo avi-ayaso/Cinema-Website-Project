@@ -1,5 +1,6 @@
 const jsonfile = require('jsonfile');
-const permissionsPath = 'C:\\Users\\elada\\OneDrive\\שולחן העבודה\\Full Stack Web Course\\Fullstack Final Project\\UsersDB\\Permissions.json';
+const permissionsPath =
+	'C:\\Users\\elada\\OneDrive\\שולחן העבודה\\Full Stack Web Course\\Fullstack Final Project\\Cinema-Website-Project\\UsersDB\\Permissions.json';
 
 const getAllUsersPermissions = () => {
 	return new Promise((resolve, reject) => {

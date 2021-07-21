@@ -5,6 +5,9 @@ import UsersManagementComp from './UsersManagementComp';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import MoviesManagementComp from './MoviesManagementComp';
 import SubsManagementComp from './SubsManagementComp';
+import { AppBar, Button, IconButton, makeStyles, Toolbar, Typography } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+import e from 'express';
 
 const MainComp = () => {
 	let dispatch = useDispatch();
@@ -31,21 +34,38 @@ const MainComp = () => {
 		}
 	}, []);
 
+	const useStyles = makeStyles(theme => ({
+		navigationBtn: {
+			marginLeft: 'auto',
+			marginRight: 'auto'
+		},
+		navigationBar: {
+			backgroundColor: '#B0C4DE'
+		}
+	}));
+
+	const classes = useStyles();
+
 	return (
 		<div>
 			<h3>Hello {loggedUser.firstName},</h3>
-			<Link to="/main/moviesmanagement">
-				<input type="button" value="Movies" />
-			</Link>
-			<Link to="/main/subscriptionsmanagement">
-				<input type="button" value="Subscriptions" />
-			</Link>
-			<Link to="/main/usersmanagement">
-				<input type="button" style={{ display: admin }} value="Users Managment" />
-			</Link>
-			<Link to="/">
-				<input type="button" value="LogOut" />
-			</Link>
+			<AppBar position="static">
+				<Toolbar className={classes.navigationBar}>
+					<Button className={classes.navigationBtn} color="inherit">
+						<Link to="/main/moviesmanagement">Movies</Link>
+					</Button>
+					<Button className={classes.navigationBtn} color="inherit">
+						<Link to="/main/subscriptionsmanagement">Subscriptions</Link>
+					</Button>
+					<Button className={classes.navigationBtn} style={{ display: admin }} color="inherit">
+						<Link to="/main/usersmanagement">Users Managment</Link>
+					</Button>
+					<Button className={classes.navigationBtn} color="inherit">
+						<Link to="/">LogOut</Link>
+					</Button>
+				</Toolbar>
+			</AppBar>
+
 			<Switch>
 				<Route path="/main/moviesmanagement" component={MoviesManagementComp} />
 				<Route path="/main/subscriptionsmanagement" component={SubsManagementComp} />
