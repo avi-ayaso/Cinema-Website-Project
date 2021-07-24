@@ -24,9 +24,9 @@ A website where cinema employees can subscribe anyone and everyone to any movie 
 2. Run the servers by running the command: 'node main.js' in 2 terminals - one for the UsersDB folder and one for SubscriptionsDB folder.
 3. Run the React App by entering the command: 'npm start' in the terminal of 'my-project' folder
 #### Installation
-1. Nodejs (version 16.5.0 or higher).
-2. MongoDB Community server.
-3. MongoDB Compass Or Robo 3T.
+1. Nodejs - (https://nodejs.org/en/download/current/)
+2. MongoDB Community server - (https://www.mongodb.com/try/download/community)
+3. MongoDB GUI: MongoDB Compass or Robo 3T - (https://www.mongodb.com/products/compass) or (https://robomongo.org/)
 
 [Back To The Top](#read-me-template)
 
