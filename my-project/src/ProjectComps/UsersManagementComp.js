@@ -3,26 +3,14 @@ import { Link, Route, Switch } from 'react-router-dom';
 import AddUserComp from './AddUserComp';
 import EditUserComp from './EditUserComp';
 import UsersComp from './UsersComp';
-import { connect } from 'react-redux';
 
 const UsersManagementComp = () => {
-	const linkStyle = {
-		backgroundColor: 'white',
-		color: 'black',
-		padding: '5px 5px',
-		textAlign: 'center',
-		textDecoration: 'none',
-		display: 'inline-block',
-		marginLeft: '10px',
-		marginRight: '10px'
-	};
-
 	return (
 		<div style={{ marginTop: '20px' }}>
-			<Link to="/main/usersmanagement/allusers/0" style={linkStyle}>
+			<Link to="/main/usersmanagement/allusers/0" className="managment-btns">
 				All Users
 			</Link>
-			<Link to="/main/usersmanagement/adduser" style={linkStyle}>
+			<Link to="/main/usersmanagement/adduser" className="managment-btns">
 				Add User
 			</Link>
 			<br /> <br />

@@ -23,15 +23,24 @@ const AddMovieComp = props => {
 				},
 				premiered: premiered
 			};
-			let addedMovie = (await axios.post('http://localhost:8080/movies', newMovie)).data;
-			if (addedMovie.name !== '') {
-				console.log(addedMovie);
+
+			try {
+				let response = await axios.post('http://localhost:8080/movies', newMovie);
+				console.log(response.data);
 				props.history.push('/main/moviesmanagement/allmovies/1');
+			} catch (error) {
+				console.error(error);
 			}
-			else {
-				console.log(addedMovie);
-				alert('Something went wrong with the Server! );');
-			}
+
+			// let addedMovie = (await axios.post('http://localhost:8080/movies', newMovie)).data;
+			// if (addedMovie.name !== '') {
+			// 	console.log(addedMovie);
+			// 	props.history.push('/main/moviesmanagement/allmovies/1');
+			// }
+			// else {
+			// 	console.log(addedMovie);
+			// 	alert('Something went wrong with the Server! );');
+			// }
 		}
 	};
 

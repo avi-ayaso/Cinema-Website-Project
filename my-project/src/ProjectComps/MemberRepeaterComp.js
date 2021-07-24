@@ -25,9 +25,13 @@ const MemberRepeaterComp = props => {
 	);
 
 	const deleteMember = async () => {
-		let resp = await axios.delete(`http://localhost:8080/members/${props.member._id}`);
-		console.log(resp);
-		window.location.reload();
+		try {
+			let resp = await axios.delete(`http://localhost:8080/members/${props.member._id}`);
+			console.log(resp.data);
+			window.location.reload();
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	const openNewMovieDiv = () => {
@@ -46,7 +50,7 @@ const MemberRepeaterComp = props => {
 			console.log(movieName);
 		}
 		else {
-			let movieId = props.data.movies.find(item => item.name == movieName);
+			let movieId = movies.find(item => item.name == movieName);
 			let newSub = {
 				memberId: member._id,
 				movies: [
@@ -57,24 +61,28 @@ const MemberRepeaterComp = props => {
 				]
 			};
 			console.log(newSub);
-			await axios.post('http://localhost:8080/subscriptions', newSub);
-			let allSubs = (await axios.get('http://localhost:8080/movies')).data;
-			let newSubId = allSubs[allSubs.length - 1]._id;
-			let addToStore = {
-				id: newSubId,
-				memberId: member._id,
-				movies: [
-					{
-						movieId: movieId,
-						date: dateStr
-					}
-				]
-			};
-			let action = {
-				type: 'ADD_SUB',
-				payload: addToStore
-			};
-			props.dispatch(action);
+			try {
+				await axios.post('http://localhost:8080/subscriptions', newSub);
+				let allSubs = (await axios.get('http://localhost:8080/movies')).data;
+				let newSubId = allSubs[allSubs.length - 1]._id;
+				let addToStore = {
+					id: newSubId,
+					memberId: member._id,
+					movies: [
+						{
+							movieId: movieId,
+							date: dateStr
+						}
+					]
+				};
+				let action = {
+					type: 'ADD_SUB',
+					payload: addToStore
+				};
+				props.dispatch(action);
+			} catch (error) {
+				console.error(error);
+			}
 		}
 	};
 
@@ -107,17 +115,6 @@ const MemberRepeaterComp = props => {
 		);
 	}
 
-	const btnStyle = {
-		backgroundColor: 'transparent',
-		color: 'black',
-		padding: '5px 5px',
-		textAlign: 'center',
-		textDecoration: 'none',
-		display: 'inline-block',
-		marginLeft: '10px',
-		marginRight: '10px'
-	};
-
 	return (
 		<div>
 			<h3>{props.member.name}</h3> <br />
@@ -125,7 +122,7 @@ const MemberRepeaterComp = props => {
 			<b>City:</b> {props.member.address.city} <br />
 			<div>
 				<h5>Movies watched:</h5>
-				<Button style={btnStyle} onClick={openNewMovieDiv.bind(this)}>
+				<Button className="repeater-btns" onClick={openNewMovieDiv.bind(this)}>
 					Subscribe To A New Movie
 				</Button>
 				{/* <input type="button" value="Subscribe To A New Movie" onClick={openNewMovieDiv.bind(this)} /> */}
@@ -137,11 +134,11 @@ const MemberRepeaterComp = props => {
 			</Link> */}
 			<Button>
 				{' '}
-				<Link to={`/main/subscriptionsmanagement/editmember/${props.member._id}`} style={btnStyle}>
+				<Link to={`/main/subscriptionsmanagement/editmember/${props.member._id}`} className="repeater-btns">
 					Edit
 				</Link>
 			</Button>
-			<Button style={btnStyle} onClick={deleteMember}>
+			<Button className="repeater-btns" onClick={deleteMember}>
 				Delete
 			</Button>
 			{/* <div>

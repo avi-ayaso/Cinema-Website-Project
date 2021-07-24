@@ -3,7 +3,7 @@ import { Link, Route, Switch } from 'react-router-dom';
 import AddMemberComp from './AddMemberComp';
 import EditMemberComp from './EditMemberComp';
 import MembersComp from './MembersComp';
-import { connect, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const SubsManagementComp = () => {
 	const [ allowToView, setAllowToView ] = useState('');
@@ -25,23 +25,12 @@ const SubsManagementComp = () => {
 		}
 	}, []);
 
-	const linkStyle = {
-		backgroundColor: 'white',
-		color: 'black',
-		padding: '5px 5px',
-		textAlign: 'center',
-		textDecoration: 'none',
-		display: 'inline-block',
-		marginLeft: '10px',
-		marginRight: '10px'
-	};
-
 	return (
 		<div style={{ marginTop: '20px' }}>
-			<Link to="/main/subscriptionsmanagement/allmembers/0" style={{ display: allowToView }} style={linkStyle}>
+			<Link to="/main/subscriptionsmanagement/allmembers/0" className="managment-btns" style={{ display: allowToView }}>
 				All Members
 			</Link>
-			<Link to="/main/subscriptionsmanagement/addmember" style={{ display: allowToAdd }} style={linkStyle}>
+			<Link to="/main/subscriptionsmanagement/addmember" className="managment-btns" style={{ display: allowToAdd }}>
 				Add Member
 			</Link>
 			<br /> <br />

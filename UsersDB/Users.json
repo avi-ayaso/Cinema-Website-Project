@@ -1,4 +1,1 @@
-[
-	{ "id": "60f7f52a8dbf0c5a20b901ee", "firstName": "Elad", "lastName": "Ayaso", "creationDate": "6.7.2000", "sessionTimeOut": 40 },
-	{ "id": "60f7f52a8dbf0c5a20b901ef", "firstName": "Aviv", "lastName": "Zamir", "creationDate": "June 15, 2021", "sessionTimeOut": 23 }
-]
+[{"id":"60f7f52a8dbf0c5a20b901ee","firstName":"Elad","lastName":"Ayaso","creationDate":"6.7.2000","sessionTimeOut":40},{"id":"60f7f52a8dbf0c5a20b901ef","firstName":"Aviv","lastName":"Zamir","creationDate":"June 15, 2021","sessionTimeOut":23},{"id":"60fc6f1d4174343bbcc1900f","firstName":"Avi","lastName":"Ayaso","creationDate":"2021-07-24T19:50:53.038Z","sessionTimeOut":"40"}]

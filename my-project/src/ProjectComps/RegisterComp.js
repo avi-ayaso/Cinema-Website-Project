@@ -12,22 +12,26 @@ const RegisterComp = props => {
 	const btnstyle = { margin: '8px 0' };
 
 	const setupLoginDetails = async () => {
-		let accounts = await (await axios.get('http://localhost:8080/accounts')).data;
-		let isInDB = accounts.some(account => account.username === username);
-		if (isInDB) {
-			accounts.forEach(async account => {
-				if (account.username === username) {
-					let newAccount = {
-						username: username,
-						password: password
-					};
-					await axios.put(`http://localhost:8080/accounts/${account._id}`, newAccount);
-					props.history.push('/');
-				}
-			});
-		}
-		else {
-			alert('No Such Username In the System!');
+		try {
+			let accounts = await (await axios.get('http://localhost:8080/accounts')).data;
+			let isInDB = accounts.some(account => account.username === username);
+			if (isInDB) {
+				accounts.forEach(async account => {
+					if (account.username === username) {
+						let newAccount = {
+							username: username,
+							password: password
+						};
+						await axios.put(`http://localhost:8080/accounts/${account._id}`, newAccount);
+						props.history.push('/');
+					}
+				});
+			}
+			else {
+				alert('No Such Username In the System!');
+			}
+		} catch (error) {
+			console.error(error);
 		}
 	};
 
@@ -38,7 +42,7 @@ const RegisterComp = props => {
 					<Avatar style={avatarStyle}>
 						<LockOutlinedIcon />
 					</Avatar>
-					<h2>Create Account</h2>
+					<h2>Sign Up</h2>
 				</Grid>
 				<TextField label="Username" placeholder="Enter username" onChange={e => setUsername(e.target.value)} fullWidth required />
 				<TextField

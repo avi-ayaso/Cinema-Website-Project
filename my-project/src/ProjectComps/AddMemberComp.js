@@ -20,15 +20,24 @@ const AddMemberComp = props => {
 					city: city
 				}
 			};
-			let addedMember = (await axios.post('http://localhost:8080/members/', newMember)).data;
-			if (addedMember.name !== '') {
-				console.log(addedMember);
+
+			try {
+				let response = await axios.post('http://localhost:8080/members', newMember);
+				console.log(response.data);
 				props.history.push('/main/subscriptionsmanagement/allmembers/1');
+			} catch (error) {
+				console.error(error);
 			}
-			else {
-				console.log(addedMember);
-				alert('Something went wrong with the Server! );');
-			}
+
+			// let addedMember = (await axios.post('http://localhost:8080/members', newMember)).data;
+			// if (addedMember.name !== '') {
+			// 	console.log(addedMember);
+			// 	props.history.push('/main/subscriptionsmanagement/allmembers/1');
+			// }
+			// else {
+			// 	console.log(addedMember);
+			// 	alert('Something went wrong with the Server! );');
+			// }
 		}
 	};
 

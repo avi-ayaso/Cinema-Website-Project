@@ -1,3 +1,4 @@
+import { Button, TextField, FormGroup, FormControlLabel, FormControl, FormLabel, Checkbox, FormHelperText, makeStyles } from '@material-ui/core';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -80,20 +81,89 @@ const AddUserComp = props => {
 				sessionTimeOut: sessionTimeOut,
 				permissions: permissions
 			};
-			let addedUser = (await axios.post('http://localhost:8080/users', newUser)).data;
-			if (addedUser.username !== '') {
-				console.log(addedUser);
+
+			try {
+				let response = await axios.post('http://localhost:8080/users', newUser);
+				console.log(response.data);
 				props.history.push('/main/usersmanagement/allusers/1');
+			} catch (error) {
+				console.error(error);
 			}
-			else {
-				console.log(addedUser);
-				alert('Something went wrong with the Server );');
-			}
+
+			// let addedUser = (await axios.post('http://localhost:8080/users', newUser)).data;
+			// if (addedUser.username !== '') {
+			// 	console.log(addedUser);
+			// 	props.history.push('/main/usersmanagement/allusers/1');
+			// }
+			// else {
+			// 	console.log(addedUser);
+			// 	alert('Something went wrong with the Server );');
+			// }
 		}
 	};
+
+	const useStyles = makeStyles(theme => ({
+		root: {
+			display: 'flex'
+		},
+		formControl: {
+			margin: theme.spacing(3)
+		}
+	}));
+
+	const classes = useStyles();
+
 	return (
 		<div>
-			First Name: <input type="text" onChange={e => setFirstName(e.target.value)} /> <br />
+			<TextField label="Enter First Name" onChange={e => setFirstName(e.target.value)} /> <br />
+			<TextField label="Enter Last Name" onChange={e => setLastName(e.target.value)} /> <br />
+			<TextField label="Enter Username" onChange={e => setUsername(e.target.value)} /> <br />
+			<TextField label="Enter Session Time Out" onChange={e => setSessionTimeOut(e.target.value)} /> <br />
+			<FormControl className={classes.formControl}>
+				<FormLabel>Permissions:</FormLabel>
+				<FormGroup>
+					<FormControlLabel
+						control={<Checkbox onChange={e => setViewSubs.bind(this, e.target.checked)} name="View Subscriptions" />}
+						label="View Subscriptions"
+					/>
+					<FormControlLabel
+						control={<Checkbox onChange={e => createSubFunc.bind(this, e.target.checked)} name="Create Subscriptions" />}
+						label="Create Subscriptions"
+					/>
+					<FormControlLabel
+						control={<Checkbox onChange={e => updateSubFunc.bind(this, e.target.checked)} name="Update Subscriptions" />}
+						label="Update Subscriptions"
+					/>
+					<FormControlLabel
+						control={<Checkbox onChange={e => deleteSubFunc.bind(this, e.target.checked)} name="Delte Subscriptions" />}
+						label="Delete Subscriptions"
+					/>
+					<FormControlLabel
+						control={<Checkbox onChange={e => setViewMovies.bind(this, e.target.checked)} name="View Movies" />}
+						label="View Movies"
+					/>
+					<FormControlLabel
+						control={<Checkbox onChange={e => createMovieFunc.bind(this, e.target.checked)} name="Create Movies" />}
+						label="Create Movies"
+					/>
+					<FormControlLabel
+						control={<Checkbox onChange={e => updateMovieFunc.bind(this, e.target.checked)} name="Update Movies" />}
+						label="Update Movies"
+					/>
+					<FormControlLabel
+						control={<Checkbox onChange={e => deleteMovieFunc.bind(this, e.target.checked)} name="Delete Movies" />}
+						label="Delete Movies"
+					/>
+				</FormGroup>
+			</FormControl>
+			<br />
+			<Button onClick={addUser}> Add</Button>
+			<Button>
+				<Link to={`/main/membersmanagement`} className="repeater-btns">
+					Cancel
+				</Link>
+			</Button>
+			{/* First Name: <input type="text" onChange={e => setFirstName(e.target.value)} /> <br />
 			Last Name: <input type="text" onChange={e => setLastName(e.target.value)} /> <br />
 			Username: <input type="text" onChange={e => setUsername(e.target.value)} /> <br />
 			Session time out: <input type="text" onChange={e => setSessionTimeOut(e.target.value)} /> <br />
@@ -110,7 +180,7 @@ const AddUserComp = props => {
 			<input type="button" value="Add" onClick={addUser} />
 			<Link to={'/main/usersmanagement'}>
 				<input type="button" value="Cancel" />
-			</Link>
+			</Link> */}
 		</div>
 	);
 };

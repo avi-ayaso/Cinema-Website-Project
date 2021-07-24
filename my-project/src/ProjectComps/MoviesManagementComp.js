@@ -3,7 +3,7 @@ import { Link, Route, Switch } from 'react-router-dom';
 import AddMovieComp from './AddMovieComp';
 import EditMovieComp from './EditMovieComp';
 import MoviesComp from './MoviesComp';
-import { connect, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const MoviesManagementComp = () => {
 	const [ allowToView, setAllowToView ] = useState('');
@@ -25,24 +25,13 @@ const MoviesManagementComp = () => {
 		}
 	}, []);
 
-	const linkStyle = {
-		backgroundColor: 'white',
-		color: 'black',
-		padding: '5px 5px',
-		textAlign: 'center',
-		textDecoration: 'none',
-		display: 'inline-block',
-		marginLeft: '10px',
-		marginRight: '10px'
-	};
-
 	return (
 		<div style={{ marginTop: '20px' }}>
 			<div style={{ backgroundColor: 'transparent' }}>
-				<Link to="/main/moviesmanagement/allmovies/0" style={{ display: allowToView }} style={linkStyle}>
+				<Link to="/main/moviesmanagement/allmovies/0" className="managment-btns" style={{ display: allowToView }}>
 					All Movies
 				</Link>
-				<Link to="/main/moviesmanagement/addmovie" style={{ display: allowToAdd }} style={linkStyle}>
+				<Link to="/main/moviesmanagement/addmovie" className="managment-btns" style={{ display: allowToAdd }}>
 					{' '}
 					Add Movie
 				</Link>
