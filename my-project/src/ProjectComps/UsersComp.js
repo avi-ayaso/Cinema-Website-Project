@@ -11,15 +11,12 @@ const UsersComp = props => {
 		setUsers(usersData);
 	}, []);
 
-	useEffect(
-		() => {
-			if (props.match.params.reload == 1) {
-				props.history.push('/main/usersmanagement/allusers/0');
-				window.location.reload();
-			}
-		},
-		[ props.match.params.reload ]
-	);
+	useEffect(() => {
+		if (props.match.params.reload == 1) {
+			props.history.push('/main/usersmanagement/allusers/0');
+			window.location.reload();
+		}
+	}, []);
 
 	const [ pageNum, setPageNum ] = useState(0);
 	const usersPerPage = 10;

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 
@@ -14,19 +13,12 @@ const UserRepeaterComp = props => {
 	}
 
 	const deleteUser = async () => {
-		await axios.delete(`http://localhost:8080/users/${props.user.id}`);
-		window.location.reload();
-	};
-
-	const btnStyle = {
-		backgroundColor: 'transparent',
-		color: 'black',
-		padding: '5px 5px',
-		textAlign: 'center',
-		textDecoration: 'none',
-		display: 'inline-block',
-		marginLeft: '10px',
-		marginRight: '10px'
+		try {
+			await axios.delete(`http://localhost:8080/users/${props.user.id}`);
+			window.location.reload();
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	return (
@@ -47,12 +39,8 @@ const UserRepeaterComp = props => {
 			<Button className="repeater-btns" style={{ display: btnsVisibility }} onClick={deleteUser}>
 				Delete
 			</Button>
-			{/* <Link to={`/main/usersmanagement/edituser/${props.user.id}`}>
-				<input type="button" style={{ display: btnsVisibility }} value="Edit" />
-			</Link>
-			<input type="button" style={{ display: btnsVisibility }} value="Delete" onClick={deleteUser} /> */}
 		</div>
 	);
 };
 
-export default withRouter(connect()(UserRepeaterComp));
+export default withRouter(UserRepeaterComp);

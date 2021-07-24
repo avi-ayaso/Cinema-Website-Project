@@ -15,33 +15,44 @@ const LoginComp = props => {
 	const [ password, setPassword ] = useState('');
 
 	const checkValues = async () => {
-		if (username === 'elad' && password === 'ayaso') {
-			let accounts = (await axios.get('http://localhost:8080/accounts')).data;
-			let adminDB = accounts.find(account => account.username === 'elad');
-			let adminData = (await axios.get(`http://localhost:8080/users/${adminDB._id}`)).data;
-			console.log(adminData);
-			let action = {
-				type: 'ADMIN_ENTERED',
-				payload: adminData
-			};
-			dispatch(action);
-			props.history.push('/main');
+		if (username === '' || password === '') {
+			alert('One Or More Of The Text Fields Is Empty!');
 		}
-		else {
-			let accounts = (await axios.get('http://localhost:8080/accounts')).data;
-			let validateAcoount = accounts.find(account => account.username === username && account.password === password);
-			if (validateAcoount === undefined) {
-				alert('Incorrect Username/Password');
-			}
-			else {
-				let userData = (await axios.get(`http://localhost:8080/users/${validateAcoount._id}`)).data;
-				console.log(userData);
+		else if (username === 'elad' && password === 'ayaso') {
+			try {
+				let accounts = (await axios.get('http://localhost:8080/accounts')).data;
+				let adminDB = accounts.find(account => account.username === 'elad');
+				let adminData = (await axios.get(`http://localhost:8080/users/${adminDB._id}`)).data;
+				console.log(adminData);
 				let action = {
-					type: 'USER_ENTERED',
-					payload: userData
+					type: 'ADMIN_ENTERED',
+					payload: adminData
 				};
 				dispatch(action);
 				props.history.push('/main');
+			} catch (error) {
+				console.error(error);
+			}
+		}
+		else {
+			try {
+				let accounts = (await axios.get('http://localhost:8080/accounts')).data;
+				let validateAcoount = accounts.find(account => account.username === username && account.password === password);
+				if (validateAcoount === undefined) {
+					alert('Incorrect Username/Password');
+				}
+				else {
+					let userData = (await axios.get(`http://localhost:8080/users/${validateAcoount._id}`)).data;
+					console.log(userData);
+					let action = {
+						type: 'USER_ENTERED',
+						payload: userData
+					};
+					dispatch(action);
+					props.history.push('/main');
+				}
+			} catch (error) {
+				console.error(error);
 			}
 		}
 	};

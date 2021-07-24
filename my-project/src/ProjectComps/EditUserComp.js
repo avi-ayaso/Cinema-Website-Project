@@ -89,15 +89,24 @@ const EditUserComp = props => {
 				creationDate: creationDate,
 				permissions: permissions
 			};
-			let update = (await axios.put(`http://localhost:8080/users/${props.match.params.id}`, updatedUser)).data;
-			if (update.username !== '') {
-				console.log(update);
+
+			try {
+				let response = axios.put(`http://localhost:8080/users/${props.match.params.id}`, updatedUser);
+				console.log(response.data);
 				props.history.push('/main/usersmanagement/allusers/1');
+			} catch (error) {
+				console.error(error);
 			}
-			else {
-				console.log(update);
-				alert('Something went wrong with the Server! );');
-			}
+
+			// let update = (await axios.put(`http://localhost:8080/users/${props.match.params.id}`, updatedUser)).data;
+			// if (update.username !== '') {
+			// 	console.log(update);
+			// 	props.history.push('/main/usersmanagement/allusers/1');
+			// }
+			// else {
+			// 	console.log(update);
+			// 	alert('Something went wrong with the Server! );');
+			// }
 		}
 	};
 

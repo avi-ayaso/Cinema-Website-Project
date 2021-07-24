@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
 import UsersManagementComp from './UsersManagementComp';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import MoviesManagementComp from './MoviesManagementComp';
 import SubsManagementComp from './SubsManagementComp';
 import { AppBar, Button, makeStyles, Toolbar } from '@material-ui/core';
@@ -13,22 +13,26 @@ const MainComp = () => {
 	let loggedUser = useSelector(state => state.loggedUser);
 
 	useEffect(async () => {
-		let users = (await axios.get('http://localhost:8080/users')).data;
-		let movies = (await axios.get('http://localhost:8080/movies')).data;
-		let members = (await axios.get('http://localhost:8080/members')).data;
-		let subscriptions = (await axios.get('http://localhost:8080/subscriptions')).data;
-		let action = {
-			type: 'INSERT_DATA',
-			payload: {
-				users: users,
-				movies: movies,
-				members: members,
-				subscriptions: subscriptions
+		try {
+			let users = (await axios.get('http://localhost:8080/users')).data;
+			let movies = (await axios.get('http://localhost:8080/movies')).data;
+			let members = (await axios.get('http://localhost:8080/members')).data;
+			let subscriptions = (await axios.get('http://localhost:8080/subscriptions')).data;
+			let action = {
+				type: 'INSERT_DATA',
+				payload: {
+					users: users,
+					movies: movies,
+					members: members,
+					subscriptions: subscriptions
+				}
+			};
+			dispatch(action);
+			if (loggedUser.username == 'elad') {
+				setAdmin('inline');
 			}
-		};
-		dispatch(action);
-		if (loggedUser.username == 'elad') {
-			setAdmin('inline');
+		} catch (error) {
+			console.error(error);
 		}
 	}, []);
 
@@ -43,14 +47,6 @@ const MainComp = () => {
 	}));
 
 	const classes = useStyles();
-	const linkStyle = {
-		backgroundColor: 'transparent',
-		color: 'black',
-		padding: '10px 10px',
-		textAlign: 'center',
-		textDecoration: 'none',
-		display: 'inline-block'
-	};
 
 	return (
 		<div>
@@ -58,22 +54,22 @@ const MainComp = () => {
 			<AppBar position="static">
 				<Toolbar className={classes.navigationBar}>
 					<Button className={classes.navigationBtn} color="inherit">
-						<Link to="/main/moviesmanagement" style={linkStyle}>
+						<Link to="/main/moviesmanagement" className="nav-bar-links">
 							Movies
 						</Link>
 					</Button>
 					<Button className={classes.navigationBtn} color="inherit">
-						<Link to="/main/subscriptionsmanagement" style={linkStyle}>
+						<Link to="/main/subscriptionsmanagement" className="nav-bar-links">
 							Subscriptions
 						</Link>
 					</Button>
 					<Button className={classes.navigationBtn} style={{ display: admin }} color="inherit">
-						<Link to="/main/usersmanagement" style={linkStyle}>
+						<Link to="/main/usersmanagement" className="nav-bar-links">
 							Users Managment
 						</Link>
 					</Button>
 					<Button className={classes.navigationBtn} color="inherit">
-						<Link to="/" style={linkStyle}>
+						<Link to="/" className="nav-bar-links">
 							LogOut
 						</Link>
 					</Button>
@@ -89,4 +85,4 @@ const MainComp = () => {
 	);
 };
 
-export default connect()(MainComp);
+export default MainComp;

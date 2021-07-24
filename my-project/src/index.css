@@ -1,13 +1,36 @@
 body {
-	background-image: url("ThorImg.jpg");
 	background-repeat: no-repeat;
 	background-color: #cccccc;
 	background-attachment: fixed;
 	margin: 0;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100vh;
+	animation: animate 36s ease-in-out infinite;
+	background-size: cover;
+
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
 		sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+}
+
+@keyframes animate {
+	0%,
+	100% {
+		background-image: url("ThorImg.jpg");
+	}
+	25% {
+		background-image: url("CaptainAmerica.jpeg");
+	}
+	50% {
+		background-image: url("BlackPanther.webp");
+	}
+	75% {
+		background-image: url("DoctorStrange.webp");
+	}
 }
 
 code {
