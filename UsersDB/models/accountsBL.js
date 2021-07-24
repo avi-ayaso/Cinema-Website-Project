@@ -29,7 +29,7 @@ const getAccountById = accountId => {
 const addAccount = newAccount => {
 	return new Promise((resolve, reject) => {
 		let account = new Account({
-			accountname: newAccount.accountname,
+			username: newAccount.username,
 			password: newAccount.password
 		});
 		account.save(err => {
