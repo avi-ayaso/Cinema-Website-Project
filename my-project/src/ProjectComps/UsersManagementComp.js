@@ -6,14 +6,24 @@ import UsersComp from './UsersComp';
 import { connect } from 'react-redux';
 
 const UsersManagementComp = () => {
+	const linkStyle = {
+		backgroundColor: 'white',
+		color: 'black',
+		padding: '5px 5px',
+		textAlign: 'center',
+		textDecoration: 'none',
+		display: 'inline-block',
+		marginLeft: '10px',
+		marginRight: '10px'
+	};
+
 	return (
-		<div>
-			<h3>Users</h3>
-			<Link to="/main/usersmanagement/allusers/0">
-				<input type="button" value="All Users" />
+		<div style={{ marginTop: '20px' }}>
+			<Link to="/main/usersmanagement/allusers/0" style={linkStyle}>
+				All Users
 			</Link>
-			<Link to="/main/usersmanagement/adduser">
-				<input type="button" value="Add User" />
+			<Link to="/main/usersmanagement/adduser" style={linkStyle}>
+				Add User
 			</Link>
 			<br /> <br />
 			<Switch>
@@ -25,4 +35,4 @@ const UsersManagementComp = () => {
 	);
 };
 
-export default connect()(UsersManagementComp);
+export default UsersManagementComp;

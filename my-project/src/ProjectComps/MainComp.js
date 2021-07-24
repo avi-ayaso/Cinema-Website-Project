@@ -5,9 +5,7 @@ import UsersManagementComp from './UsersManagementComp';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import MoviesManagementComp from './MoviesManagementComp';
 import SubsManagementComp from './SubsManagementComp';
-import { AppBar, Button, IconButton, makeStyles, Toolbar, Typography } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import e from 'express';
+import { AppBar, Button, makeStyles, Toolbar } from '@material-ui/core';
 
 const MainComp = () => {
 	let dispatch = useDispatch();
@@ -34,7 +32,7 @@ const MainComp = () => {
 		}
 	}, []);
 
-	const useStyles = makeStyles(theme => ({
+	const useStyles = makeStyles(() => ({
 		navigationBtn: {
 			marginLeft: 'auto',
 			marginRight: 'auto'
@@ -45,6 +43,14 @@ const MainComp = () => {
 	}));
 
 	const classes = useStyles();
+	const linkStyle = {
+		backgroundColor: 'transparent',
+		color: 'black',
+		padding: '10px 10px',
+		textAlign: 'center',
+		textDecoration: 'none',
+		display: 'inline-block'
+	};
 
 	return (
 		<div>
@@ -52,16 +58,24 @@ const MainComp = () => {
 			<AppBar position="static">
 				<Toolbar className={classes.navigationBar}>
 					<Button className={classes.navigationBtn} color="inherit">
-						<Link to="/main/moviesmanagement">Movies</Link>
+						<Link to="/main/moviesmanagement" style={linkStyle}>
+							Movies
+						</Link>
 					</Button>
 					<Button className={classes.navigationBtn} color="inherit">
-						<Link to="/main/subscriptionsmanagement">Subscriptions</Link>
+						<Link to="/main/subscriptionsmanagement" style={linkStyle}>
+							Subscriptions
+						</Link>
 					</Button>
 					<Button className={classes.navigationBtn} style={{ display: admin }} color="inherit">
-						<Link to="/main/usersmanagement">Users Managment</Link>
+						<Link to="/main/usersmanagement" style={linkStyle}>
+							Users Managment
+						</Link>
 					</Button>
 					<Button className={classes.navigationBtn} color="inherit">
-						<Link to="/">LogOut</Link>
+						<Link to="/" style={linkStyle}>
+							LogOut
+						</Link>
 					</Button>
 				</Toolbar>
 			</AppBar>

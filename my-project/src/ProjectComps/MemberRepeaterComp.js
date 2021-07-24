@@ -1,18 +1,25 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 
 const MemberRepeaterComp = props => {
 	const [ openDiv, setOpenDiv ] = useState(false);
 	const [ movieName, setMovieName ] = useState('');
 	const [ dateStr, setDateStr ] = useState('');
 	const [ member, setMember ] = useState({});
+	let moviesArr = useSelector(state => state.movies);
+	const [ movies, setMovies ] = useState([]);
+	let subsArr = useSelector(state => state.subscriptions);
+	const [ subs, setSubs ] = useState([]);
 
 	useEffect(
 		() => {
 			setMember(props.member);
+			setMovies(moviesArr);
+			setSubs(subsArr);
 		},
 		[ props ]
 	);
@@ -73,10 +80,8 @@ const MemberRepeaterComp = props => {
 
 	let newMovieDiv = <div />;
 	if (openDiv) {
-		let moviesArr = props.data.movies;
-		let subsArr = props.data.subscriptions;
-		let memberSubsObj = subsArr.find(sub => sub.memberId == member._id);
-		let filteredMoviesArr = moviesArr.filter(movie => {
+		let memberSubsObj = subs.find(sub => sub.memberId == member._id);
+		let filteredMoviesArr = movies.filter(movie => {
 			let check = memberSubsObj.movies.every(memberMovie => memberMovie.movieId == movie._id);
 			if (!check) {
 				return movie;
@@ -102,21 +107,52 @@ const MemberRepeaterComp = props => {
 		);
 	}
 
+	const btnStyle = {
+		backgroundColor: 'transparent',
+		color: 'black',
+		padding: '5px 5px',
+		textAlign: 'center',
+		textDecoration: 'none',
+		display: 'inline-block',
+		marginLeft: '10px',
+		marginRight: '10px'
+	};
+
 	return (
 		<div>
-			<b>{props.member.name}</b> <br />
-			Email: {props.member.email} <br />
-			City: {props.member.address.city} <br />
-			<Link to={`/main/subscriptionsmanagement/editmember/${props.member._id}`}>
-				<input type="button" value="Edit" />
-			</Link>
-			<input type="button" value="Delete" onClick={deleteMember} />
+			<h3>{props.member.name}</h3> <br />
+			<b>Email:</b> {props.member.email} <br />
+			<b>City:</b> {props.member.address.city} <br />
 			<div>
 				<h5>Movies watched:</h5>
-				<input type="button" value="Subscribe To A New Movie" onClick={openNewMovieDiv.bind(this)} />
+				<Button style={btnStyle} onClick={openNewMovieDiv.bind(this)}>
+					Subscribe To A New Movie
+				</Button>
+				{/* <input type="button" value="Subscribe To A New Movie" onClick={openNewMovieDiv.bind(this)} /> */}
 				{newMovieDiv}
 				<ul />
 			</div>
+			{/* <Link to={`/main/subscriptionsmanagement/editmember/${props.member._id}`}>
+				<input type="button" value="Edit" />
+			</Link> */}
+			<Button>
+				{' '}
+				<Link to={`/main/subscriptionsmanagement/editmember/${props.member._id}`} style={btnStyle}>
+					Edit
+				</Link>
+			</Button>
+			<Button style={btnStyle} onClick={deleteMember}>
+				Delete
+			</Button>
+			{/* <div>
+				<h5>Movies watched:</h5>
+				<Button style={btnStyle} onClick={openNewMovieDiv.bind(this)}>
+					Subscribe To A New Movie
+				</Button>
+				<input type="button" value="Subscribe To A New Movie" onClick={openNewMovieDiv.bind(this)} />
+				{newMovieDiv}
+				<ul />
+			</div> */}
 		</div>
 	);
 };

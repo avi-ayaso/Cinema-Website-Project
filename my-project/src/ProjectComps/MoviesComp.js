@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import MovieRepeaterComp from './MovieRepeaterComp';
 import { connect, useSelector } from 'react-redux';
 import ReactPaginate from 'react-paginate';
+import { Button, TextField } from '@material-ui/core';
 
 const MoviesComp = props => {
 	let moviesData = useSelector(state => state.movies);
@@ -23,8 +24,13 @@ const MoviesComp = props => {
 
 	const [ searchQuery, setSearchQuery ] = useState('');
 	const searchBar = () => {
-		let filteredArr = movies.filter(movie => movie.name.includes(searchQuery));
-		setMovies(filteredArr);
+		if (searchQuery == '') {
+			setMovies(moviesData);
+		}
+		else {
+			let filteredArr = moviesData.filter(movie => movie.name.includes(searchQuery));
+			setMovies(filteredArr);
+		}
 	};
 
 	const [ pageNum, setPageNum ] = useState(0);
@@ -45,41 +51,31 @@ const MoviesComp = props => {
 	const changePage = ({ selected }) => {
 		setPageNum(selected);
 	};
-	// let moviesObj = movies.map((movie, index) => {
-	// 	return (
-	// 		<tr key={index}>
-	// 			<td>
-	// 				<MovieRepeaterComp movie={movie} />
-	// 				<br />
-	// 			</td>
-	// 		</tr>
-	// 	);
-	// });
+
+	const btnstyle = { color: 'black', backgroundColor: 'white', margin: '8px 0', marginDown: '5px', borderRadius: '15px' };
 
 	return (
 		<div>
-			Find Movie: <input type="text" onChange={e => setSearchQuery(e.target.value)} />
-			<input type="button" value="Find" onClick={searchBar} /> <br />
-			{displayMovies}
-			<ReactPaginate
-				previousLabel={'<'}
-				nextLabel={'>'}
-				pageCount={pageCount}
-				onPageChange={changePage}
-				containerClassName={'paginationBttns'}
-				previousLinkClassName={'previousBttn'}
-				nextLinkClassName={'nextBttn'}
-				disabledClassName={'paginationDisabled'}
-				activeClassName={'paginationActive'}
-			/>
+			<TextField label="Enter Movie Name" onChange={e => setSearchQuery(e.target.value)} style={{ marginRight: '10px' }} />
+			<Button color="primary" variant="contained" onClick={searchBar} style={btnstyle}>
+				Search
+			</Button>
+			<div className="movies-container">{displayMovies}</div>
+			<div className="pagination-container">
+				<ReactPaginate
+					previousLabel={'<'}
+					nextLabel={'>'}
+					pageCount={pageCount}
+					onPageChange={changePage}
+					containerClassName={'paginationBttns'}
+					previousLinkClassName={'previousBttn'}
+					nextLinkClassName={'nextBttn'}
+					disabledClassName={'paginationDisabled'}
+					activeClassName={'paginationActive'}
+				/>
+			</div>
 		</div>
 	);
 };
 
-const mapStateToProps = state => {
-	return {
-		data: state
-	};
-};
-
-export default connect(mapStateToProps)(MoviesComp);
+export default connect()(MoviesComp);

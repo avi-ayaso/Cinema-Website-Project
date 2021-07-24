@@ -1,8 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import MemberRepeaterComp from './MemberRepeaterComp';
-import { connect, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import ReactPaginate from 'react-paginate';
 
 const MembersComp = props => {
+	let subsData = useSelector(state => state.subscriptions);
+	console.log(subsData);
+	let membersData = useSelector(state => state.members);
+	const [ members, setMembers ] = useState([]);
+	useEffect(() => {
+		setMembers(membersData);
+	}, []);
+
 	useEffect(
 		() => {
 			if (props.match.params.reload == 1) {
@@ -12,24 +21,58 @@ const MembersComp = props => {
 		},
 		[ props.match.params.reload ]
 	);
-	let membersData = useSelector(state => state.members);
-	let membersObj = membersData.map((member, index) => {
+
+	// let membersObj = members.map((member, index) => {
+	// 	return (
+	// 		<tr key={index}>
+	// 			<td>
+	// 				<MemberRepeaterComp member={member} />
+	// 				<br />
+	// 			</td>
+	// 		</tr>
+	// 	);
+	// });
+
+	const [ pageNum, setPageNum ] = useState(0);
+	const membersPerPage = 10;
+	const pagesVisited = pageNum * membersPerPage;
+
+	const displayMembers = members.slice(pagesVisited, pagesVisited + membersPerPage).map((member, index) => {
 		return (
-			<tr key={index}>
-				<td>
-					<MemberRepeaterComp member={member} />
-					<br />
-				</td>
-			</tr>
+			<div key={index} className="member">
+				<MemberRepeaterComp member={member} />
+				<br />
+			</div>
 		);
 	});
+
+	const pageCount = Math.ceil(members.length / membersPerPage);
+
+	const changePage = ({ selected }) => {
+		setPageNum(selected);
+	};
+
 	return (
 		<div>
-			<table style={{ marginLeft: 'auto', marginRight: 'auto' }}>
+			<div className="members-container">{displayMembers}</div>
+			<div className="pagination-container">
+				<ReactPaginate
+					previousLabel={'<'}
+					nextLabel={'>'}
+					pageCount={pageCount}
+					onPageChange={changePage}
+					containerClassName={'paginationBttns'}
+					previousLinkClassName={'previousBttn'}
+					nextLinkClassName={'nextBttn'}
+					disabledClassName={'paginationDisabled'}
+					activeClassName={'paginationActive'}
+				/>
+			</div>
+			{/* <table style={{ marginLeft: 'auto', marginRight: 'auto' }}>
 				<tbody>{membersObj}</tbody>
-			</table>
+			</table> */}
 		</div>
 	);
 };
 
-export default connect()(MembersComp);
+export default MembersComp;

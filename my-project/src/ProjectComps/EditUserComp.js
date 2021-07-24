@@ -5,9 +5,13 @@ import { Link } from 'react-router-dom';
 
 const EditUserComp = props => {
 	const [ user, setUser ] = useState({});
-	useEffect(async () => {
-		setUser(props.data.users.find(user => user.id == props.match.params.id));
-	}, []);
+	useEffect(
+		async () => {
+			let nextUser = await axios.get(`http://localhost:8080/users/${props.match.params.id}`);
+			setUser(nextUser.data);
+		},
+		[ props.match.params.id ]
+	);
 	const [ fname, setFirstName ] = useState('');
 	const [ lname, setLastName ] = useState('');
 	const [ username, setUsername ] = useState('');
@@ -122,10 +126,4 @@ const EditUserComp = props => {
 	);
 };
 
-const mapStateToProps = state => {
-	return {
-		data: state
-	};
-};
-
-export default connect(mapStateToProps)(EditUserComp);
+export default EditUserComp;

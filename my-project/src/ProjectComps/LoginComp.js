@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { connect, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Grid, Paper, Avatar, TextField, Button, Typography } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 const LoginComp = props => {
-	const paperStyle = { padding: 20, height: '70vh', width: 280, margin: '20px auto' };
+	const paperStyle = { padding: 20, height: '70vh', width: 280, margin: '20px auto', borderRadius: '35px' };
 	const avatarStyle = { backgroundColor: '#1bbd7e' };
 	const btnstyle = { margin: '8px 0' };
 
@@ -66,7 +66,7 @@ const LoginComp = props => {
 				/>
 				<br /> <br /> <br />
 				<Button type="submit" color="primary" variant="contained" style={btnstyle} onClick={checkValues} fullWidth>
-					Sign in
+					Login
 				</Button>
 				<Typography>
 					{' '}
@@ -77,4 +77,4 @@ const LoginComp = props => {
 		</Grid>
 	);
 };
-export default connect()(LoginComp);
+export default LoginComp;

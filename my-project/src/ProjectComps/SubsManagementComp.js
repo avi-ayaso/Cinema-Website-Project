@@ -9,6 +9,7 @@ const SubsManagementComp = () => {
 	const [ allowToView, setAllowToView ] = useState('');
 	const [ allowToAdd, setAllowToAdd ] = useState('');
 	let loggedUser = useSelector(state => state.loggedUser);
+
 	useEffect(() => {
 		if (loggedUser.permissions.includes('View Subscriptions')) {
 			setAllowToView('inline');
@@ -23,14 +24,25 @@ const SubsManagementComp = () => {
 			setAllowToAdd('none');
 		}
 	}, []);
+
+	const linkStyle = {
+		backgroundColor: 'white',
+		color: 'black',
+		padding: '5px 5px',
+		textAlign: 'center',
+		textDecoration: 'none',
+		display: 'inline-block',
+		marginLeft: '10px',
+		marginRight: '10px'
+	};
+
 	return (
-		<div>
-			<h3>Subscriptions</h3>
-			<Link to="/main/subscriptionsmanagement/allmembers/0">
-				<input type="button" style={{ display: allowToView }} value="All Members" />
+		<div style={{ marginTop: '20px' }}>
+			<Link to="/main/subscriptionsmanagement/allmembers/0" style={{ display: allowToView }} style={linkStyle}>
+				All Members
 			</Link>
-			<Link to="/main/subscriptionsmanagement/addmember">
-				<input type="button" style={{ display: allowToAdd }} value="Add Member" />
+			<Link to="/main/subscriptionsmanagement/addmember" style={{ display: allowToAdd }} style={linkStyle}>
+				Add Member
 			</Link>
 			<br /> <br />
 			<Switch>
@@ -42,4 +54,4 @@ const SubsManagementComp = () => {
 	);
 };
 
-export default connect()(SubsManagementComp);
+export default SubsManagementComp;

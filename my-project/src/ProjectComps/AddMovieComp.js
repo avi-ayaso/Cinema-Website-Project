@@ -1,6 +1,6 @@
+import { Button, TextField } from '@material-ui/core';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const AddMovieComp = props => {
@@ -34,18 +34,22 @@ const AddMovieComp = props => {
 			}
 		}
 	};
+
 	return (
 		<div>
-			Name: <input type="text" onChange={e => setName(e.target.value)} /> <br />
-			Genres: <input type="text" onChange={e => setGenresStr(e.target.value)} /> <br />
-			Image URL: <input type="text" onChange={e => setImage(e.target.value)} /> <br />
-			Premiered: <input type="text" onChange={e => setPremiered(e.target.value)} /> <br />
-			<input type="button" value="Add" onClick={addMovie} />
-			<Link to={'/main/moviesmanagement'}>
-				<input type="button" value="Cancel" />
-			</Link>
+			<TextField label="Enter Movie Name" onChange={e => setName(e.target.value)} /> <br />
+			<TextField label="Enter Genres" onChange={e => setGenresStr(e.target.value)} /> <br />
+			<TextField label="Enter Image URL" onChange={e => setImage(e.target.value)} /> <br />
+			<TextField label="Enter Year Premiered" onChange={e => setPremiered(e.target.value)} /> <br />
+			<br /> <br />
+			<Button onClick={addMovie}>Add</Button>
+			<Button>
+				<Link to={`/main/moviesmanagement`} className="repeater-btns">
+					Cancel
+				</Link>
+			</Button>
 		</div>
 	);
 };
 
-export default connect()(AddMovieComp);
+export default AddMovieComp;

@@ -6,8 +6,8 @@ import RegisterComp from './ProjectComps/RegisterComp';
 
 function App(){
 	return (
-		<div className="App">
-			<h1>Movies - Subscriptions Web Site</h1>
+		<div className="App" style={{ fontFamily: '-moz-initial' }}>
+			<h1>My Cinema Web Site</h1>
 			<Route path="/main" component={MainComp} />
 			<Route path="/register" component={RegisterComp} />
 			<Route path="/" exact component={LoginComp} />

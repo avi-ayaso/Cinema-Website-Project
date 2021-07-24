@@ -1,3 +1,4 @@
+import { Button, TextField } from '@material-ui/core';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -7,7 +8,7 @@ const AddMemberComp = props => {
 	const [ email, setEmail ] = useState('');
 	const [ city, setCity ] = useState('');
 
-	const AddMember = async () => {
+	const addMember = async () => {
 		if (name == '' || email == '' || city == '') {
 			alert('One or more of the textboxes is empty');
 		}
@@ -33,15 +34,16 @@ const AddMemberComp = props => {
 
 	return (
 		<div>
-			<h2>Add Member</h2>
-			Name: <input type="text" onChange={e => setName(e.target.value)} /> <br />
-			Email: <input type="email" onChange={e => setEmail(e.target.value)} /> <br />
-			City: <input type="text" onChange={e => setCity(e.target.value)} /> <br />
+			<TextField label="Enter Member Name" onChange={e => setName(e.target.value)} /> <br />
+			<TextField label="Enter Email" onChange={e => setEmail(e.target.value)} /> <br />
+			<TextField label="Enter City" onChange={e => setCity(e.target.value)} /> <br />
 			<br /> <br />
-			<input type="button" value="Add" onClick={AddMember} />
-			<Link to={'/main/membersmanagement'}>
-				<input type="button" value="Cancel" />
-			</Link>
+			<Button onClick={addMember}> Add</Button>
+			<Button>
+				<Link to={`/main/membersmanagement`} className="repeater-btns">
+					Cancel
+				</Link>
+			</Button>
 		</div>
 	);
 };

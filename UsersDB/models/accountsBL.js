@@ -1,4 +1,4 @@
-let Account = require('./accountSchema.js');
+let Account = require('./userSchema.js');
 
 const getAllAccounts = () => {
 	return new Promise((resolve, reject) => {

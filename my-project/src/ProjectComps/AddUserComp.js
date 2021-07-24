@@ -1,6 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const AddUserComp = props => {
@@ -116,4 +115,4 @@ const AddUserComp = props => {
 	);
 };
 
-export default connect()(AddUserComp);
+export default AddUserComp;

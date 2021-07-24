@@ -1,12 +1,13 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const EditMovieComp = props => {
 	const [ movie, setMovie ] = useState({});
+	console.log(movie);
 	useEffect(async () => {
-		setMovie(props.data.movies.find(movie => movie._id == props.match.params.id));
+		let nextMovie = await axios.get(`http://localhost:8080/movies/${props.match.params._id}`);
+		setMovie(nextMovie.data);
 	}, []);
 	const [ name, setName ] = useState('');
 	const [ genresStr, setGenresStr ] = useState('');
@@ -38,13 +39,13 @@ const EditMovieComp = props => {
 			}
 		}
 	};
-	console.log(props);
+
 	return (
 		<div>
-			Name: <input type="text" onChange={e => setName(e.target.value)} /> <br />
-			Genres: <input type="text" onChange={e => setGenresStr(e.target.value)} /> <br />
+			Name: <input type="text" placeholder={movie.name} onChange={e => setName(e.target.value)} /> <br />
+			Genres: <input type="text" placeholder={movie.genres} onChange={e => setGenresStr(e.target.value)} /> <br />
 			Image URL: <input type="text" onChange={e => setImage(e.target.value)} /> <br />
-			Premiered: <input type="text" onChange={e => setPremiered(e.target.value)} /> <br />
+			Premiered: <input type="text" placeholder={movie.premiered} onChange={e => setPremiered(e.target.value)} /> <br />
 			<br /> <br />
 			<input type="button" value="Update" onClick={updateMovie} />
 			<Link to={'/main/moviesmanagement'}>
@@ -54,10 +55,4 @@ const EditMovieComp = props => {
 	);
 };
 
-const mapStateToProps = state => {
-	return {
-		data: state
-	};
-};
-
-export default connect(mapStateToProps)(EditMovieComp);
+export default EditMovieComp;

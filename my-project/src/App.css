@@ -2,10 +2,69 @@
 	text-align: center;
 }
 
+.movies-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.users-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.members-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
 .movie {
 	border: 2px solid black;
 	border-radius: 10px;
-	background-color: #b3e3ff;
+	background-color: azure;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	width: 500px;
+	height: 300px;
+	margin: 20px;
+	padding: 25px;
+}
+
+.user {
+	border: 2px solid black;
+	border-radius: 10px;
+	background-color: azure;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	width: 500px;
+	height: 300px;
+	margin: 20px;
+}
+
+.repeater-btns {
+	background-color: transparent;
+	color: black;
+	padding: 5px 5px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.member {
+	border: 2px solid black;
+	border-radius: 10px;
+	background-color: azure;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -27,19 +86,19 @@
 	padding: 10px;
 	margin: 8px;
 	border-radius: 5px;
-	border: 1px solid #2b2eff;
-	color: #2b2eff;
+	border: 1px solid azure;
+	color: azure;
 	cursor: pointer;
 }
 
 .paginationBttns a:hover {
-	color: white;
-	background-color: #2b2eff;
+	color: black;
+	background-color: azure;
 }
 
 .paginationActive a {
-	color: white;
-	background-color: #2b2eff;
+	color: black;
+	background-color: azure;
 }
 
 .paginationDisabled a {
@@ -50,4 +109,11 @@
 .navigationBtn {
 	margin-left: auto;
 	margin-right: auto;
+}
+
+.pagination-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 }
