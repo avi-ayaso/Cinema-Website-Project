@@ -7,7 +7,7 @@ import MoviesManagementComp from './MoviesManagementComp';
 import SubsManagementComp from './SubsManagementComp';
 import { AppBar, Button, makeStyles, Toolbar } from '@material-ui/core';
 
-const MainComp = () => {
+const MainComp = props => {
 	let dispatch = useDispatch();
 	const [ admin, setAdmin ] = useState('none');
 	let loggedUser = useSelector(state => state.loggedUser);
@@ -18,6 +18,14 @@ const MainComp = () => {
 			let movies = (await axios.get('http://localhost:8080/movies')).data;
 			let members = (await axios.get('http://localhost:8080/members')).data;
 			let subscriptions = (await axios.get('http://localhost:8080/subscriptions')).data;
+
+			let timeout = sessionStorage.getItem('timeout');
+			setTimeout(() => {
+				alert('Your Session is over');
+				props.history.push('/');
+				window.location.reload();
+			}, timeout);
+
 			let action = {
 				type: 'INSERT_DATA',
 				payload: {
@@ -28,7 +36,7 @@ const MainComp = () => {
 				}
 			};
 			dispatch(action);
-			if (loggedUser.username == 'elad') {
+			if (loggedUser.admin) {
 				setAdmin('inline');
 			}
 		} catch (error) {

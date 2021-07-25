@@ -22,7 +22,7 @@ router.route('/').post(async (req, resp) => {
 router.route('/:id').put(async (req, resp) => {
 	let id = req.params.id;
 	let updatedSub = req.body;
-	let result = await (await axios.post(`http://localhost:8090/subscriptions/${id}`, updatedSub)).data;
+	let result = await (await axios.put(`http://localhost:8090/subscriptions/${id}`, updatedSub)).data;
 	return resp.json(result);
 });
 

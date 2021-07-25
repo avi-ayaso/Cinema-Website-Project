@@ -48,7 +48,7 @@ const updateAccount = (accountId, updatedData) => {
 		Account.findByIdAndUpdate(
 			accountId,
 			{
-				accountname: updatedData.accountname,
+				username: updatedData.username,
 				password: updatedData.password
 			},
 			err => {

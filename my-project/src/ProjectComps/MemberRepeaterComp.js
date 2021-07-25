@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { connect, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 
@@ -44,44 +44,54 @@ const MemberRepeaterComp = props => {
 	};
 
 	const subToMovie = async () => {
+		console.log(dateStr);
+		console.log(movieName);
 		if (dateStr == '' || movieName == '') {
 			alert('One Or More Of the Fields Is Empty!');
 			console.log(dateStr);
 			console.log(movieName);
 		}
 		else {
-			let movieId = movies.find(item => item.name == movieName);
-			let newSub = {
-				memberId: member._id,
-				movies: [
-					{
-						movieId: movieId._id,
-						date: dateStr
-					}
-				]
-			};
-			console.log(newSub);
-			try {
-				await axios.post('http://localhost:8080/subscriptions', newSub);
-				let allSubs = (await axios.get('http://localhost:8080/movies')).data;
-				let newSubId = allSubs[allSubs.length - 1]._id;
-				let addToStore = {
-					id: newSubId,
+			let memberSubsObj = subs.find(sub => sub.memberId == member._id);
+			if (memberSubsObj == undefined) {
+				let movieToSub = movies.find(movie => movie.name == movieName);
+				let newSub = {
 					memberId: member._id,
 					movies: [
 						{
-							movieId: movieId,
+							movieId: movieToSub._id,
 							date: dateStr
 						}
 					]
 				};
-				let action = {
-					type: 'ADD_SUB',
-					payload: addToStore
+				console.log(newSub);
+				try {
+					await axios.post('http://localhost:8080/subscriptions', newSub);
+					setOpenDiv(false);
+					props.history.push('/main');
+				} catch (error) {
+					console.error(error);
+				}
+			}
+			else {
+				let memberMoviesArr = memberSubsObj.movies;
+				let movieToSub = movies.find(movie => movie.name == movieName);
+				let newMovieToArr = {
+					movieId: movieToSub._id,
+					date: dateStr
 				};
-				props.dispatch(action);
-			} catch (error) {
-				console.error(error);
+				memberMoviesArr.push(newMovieToArr);
+				let updatedSub = {
+					memberId: member._id,
+					movies: memberMoviesArr
+				};
+				try {
+					await axios.put(`http://localhost:8080/subscriptions/${memberSubsObj._id}`, updatedSub);
+					setOpenDiv(false);
+					props.history.push('/main');
+				} catch (error) {
+					console.error(error);
+				}
 			}
 		}
 	};
@@ -89,49 +99,71 @@ const MemberRepeaterComp = props => {
 	let newMovieDiv = <div />;
 	if (openDiv) {
 		let memberSubsObj = subs.find(sub => sub.memberId == member._id);
-		let filteredMoviesArr = movies.filter(movie => {
-			let check = memberSubsObj.movies.every(memberMovie => memberMovie.movieId == movie._id);
-			if (!check) {
-				return movie;
-			}
-		});
-		let moviesObj = filteredMoviesArr.map((movie, index) => {
-			return (
-				<option key={index} value={movie.name}>
-					{movie.name}
-				</option>
-			);
-		});
+		let moviesSelector;
+		if (memberSubsObj == undefined) {
+			moviesSelector = movies.map((movie, index) => {
+				return (
+					<option key={index} value={movie.name}>
+						{movie.name}
+					</option>
+				);
+			});
+		}
+		else {
+			let filteredMoviesArr = movies.filter(movie => {
+				let subWatched = memberSubsObj.movies.some(memberMovie => memberMovie.movieId == movie._id);
+				if (!subWatched) {
+					return movie;
+				}
+			});
+			moviesSelector = filteredMoviesArr.map((movie, index) => {
+				return (
+					<option key={index} value={movie.name}>
+						{movie.name}
+					</option>
+				);
+			});
+		}
 		newMovieDiv = (
 			<div>
-				Add A New Movie <br />
 				<select value={movieName} onChange={e => setMovieName(e.target.value)}>
 					<option />
-					{moviesObj}
+					{moviesSelector}
 				</select>
-				<input type="text" placeholder="Enter Date" onChange={e => setDateStr(e.target.value)} /> <br />
+				<input type="date" placeholder="Enter Date" onChange={e => setDateStr(e.target.value)} /> <br />
 				<input type="button" value="Subscribe" onClick={subToMovie} />
 			</div>
 		);
 	}
 
+	let sub = subs.find(item => item.memberId == member._id);
+	console.log(sub);
+	let subMovies = [];
+
+	if (sub !== undefined) {
+		subMovies = movies.map(item => {
+			let watched = sub.movies.find(movieItem => movieItem.movieId == item._id);
+			if (watched !== undefined) {
+				let date = new Date(watched.date);
+				return <li>{item.name + ', ' + date.toLocaleDateString()}</li>;
+			}
+		});
+	}
+
 	return (
-		<div>
+		<div className="member">
 			<h3>{props.member.name}</h3> <br />
 			<b>Email:</b> {props.member.email} <br />
 			<b>City:</b> {props.member.address.city} <br />
 			<div>
 				<h5>Movies watched:</h5>
-				<Button className="repeater-btns" onClick={openNewMovieDiv.bind(this)}>
+				<ul>{subMovies}</ul>
+				<br />
+				<Button className="repeater-btns" onClick={openNewMovieDiv}>
 					Subscribe To A New Movie
 				</Button>
-				{/* <input type="button" value="Subscribe To A New Movie" onClick={openNewMovieDiv.bind(this)} /> */}
 				{newMovieDiv}
-				<ul />
 			</div>
-			{/* <Link to={`/main/subscriptionsmanagement/editmember/${props.member._id}`}>
-				<input type="button" value="Edit" />
-			</Link> */}
 			<Button>
 				{' '}
 				<Link to={`/main/subscriptionsmanagement/editmember/${props.member._id}`} className="repeater-btns">
@@ -141,17 +173,8 @@ const MemberRepeaterComp = props => {
 			<Button className="repeater-btns" onClick={deleteMember}>
 				Delete
 			</Button>
-			{/* <div>
-				<h5>Movies watched:</h5>
-				<Button style={btnStyle} onClick={openNewMovieDiv.bind(this)}>
-					Subscribe To A New Movie
-				</Button>
-				<input type="button" value="Subscribe To A New Movie" onClick={openNewMovieDiv.bind(this)} />
-				{newMovieDiv}
-				<ul />
-			</div> */}
 		</div>
 	);
 };
 
-export default withRouter(connect()(MemberRepeaterComp));
+export default withRouter(MemberRepeaterComp);

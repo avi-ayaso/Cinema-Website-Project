@@ -24,6 +24,8 @@ const LoginComp = props => {
 				let adminDB = accounts.find(account => account.username === 'elad');
 				let adminData = (await axios.get(`http://localhost:8080/users/${adminDB._id}`)).data;
 				console.log(adminData);
+				let timeout = adminData.sessionTimeOut * 60 * 1000;
+				sessionStorage.setItem('timeout', timeout);
 				let action = {
 					type: 'ADMIN_ENTERED',
 					payload: adminData
@@ -44,6 +46,8 @@ const LoginComp = props => {
 				else {
 					let userData = (await axios.get(`http://localhost:8080/users/${validateAcoount._id}`)).data;
 					console.log(userData);
+					let timeout = userData.sessionTimeOut * 60 * 1000;
+					sessionStorage.setItem('timeout', timeout);
 					let action = {
 						type: 'USER_ENTERED',
 						payload: userData

@@ -50,6 +50,17 @@
 	margin: 20px;
 }
 
+.member {
+	border: 2px solid black;
+	border-radius: 10px;
+	background-color: azure;
+	justify-content: center;
+	align-items: center;
+	width: 500px;
+	height: 100%;
+	padding: 10px;
+}
+
 .managment-btns {
 	background-color: white;
 	color: black;
@@ -79,19 +90,6 @@
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
-}
-
-.member {
-	border: 2px solid black;
-	border-radius: 10px;
-	background-color: azure;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	width: 500px;
-	height: 300px;
-	margin: 20px;
 }
 
 .paginationBttns {
