@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import MovieRepeaterComp from './MovieRepeaterComp';
-import { connect, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ReactPaginate from 'react-paginate';
 import { Button, TextField } from '@material-ui/core';
 
@@ -39,7 +39,7 @@ const MoviesComp = props => {
 
 	const displayMovies = movies.slice(pagesVisited, pagesVisited + moviesPerPage).map((movie, index) => {
 		return (
-			<div key={index} className="movie">
+			<div key={index}>
 				<MovieRepeaterComp movie={movie} />
 				<br />
 			</div>
@@ -78,4 +78,4 @@ const MoviesComp = props => {
 	);
 };
 
-export default connect()(MoviesComp);
+export default MoviesComp;

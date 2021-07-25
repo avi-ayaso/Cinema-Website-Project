@@ -11,6 +11,7 @@ const getAllUsersData = async () => {
 		data[i] = {
 			id: usersDBArr[i]._id,
 			username: usersDBArr[i].username,
+			admin: usersDBArr[i].admin,
 			firstName: usersJsonArr[i].firstName,
 			lastName: usersJsonArr[i].lastName,
 			creationDate: usersJsonArr[i].creationDate,

@@ -7,7 +7,7 @@ import { Button } from '@material-ui/core';
 const UserRepeaterComp = props => {
 	let headlineVisibility = 'none';
 	let btnsVisibility = 'inline';
-	if (props.user.username == 'elad') {
+	if (props.user.admin) {
 		btnsVisibility = 'none';
 		headlineVisibility = 'block';
 	}
@@ -22,8 +22,8 @@ const UserRepeaterComp = props => {
 	};
 
 	return (
-		<div style={{ padding: '10px' }}>
-			<h3 style={{ display: headlineVisibility }}>Admin</h3>
+		<div className="user" style={{ padding: '10px' }}>
+			<h2 style={{ display: headlineVisibility }}>Admin</h2>
 			<b>Name:</b> {props.user.firstName + ' ' + props.user.lastName} <br />
 			<b>Username:</b> {props.user.username} <br />
 			<b>Session time out:</b> {props.user.sessionTimeOut} <br />

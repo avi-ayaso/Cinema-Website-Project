@@ -38,12 +38,7 @@ const MembersComp = props => {
 	const pagesVisited = pageNum * membersPerPage;
 
 	const displayMembers = members.slice(pagesVisited, pagesVisited + membersPerPage).map((member, index) => {
-		return (
-			<div key={index} className="member">
-				<MemberRepeaterComp member={member} />
-				<br />
-			</div>
-		);
+		return <MemberRepeaterComp key={index} member={member} />;
 	});
 
 	const pageCount = Math.ceil(members.length / membersPerPage);

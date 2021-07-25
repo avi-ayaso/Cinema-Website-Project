@@ -32,12 +32,14 @@ const addUser = newUser => {
 		if (newUser.password != undefined) {
 			user = new User({
 				username: newUser.username,
-				password: newUser.password
+				password: newUser.password,
+				admin: newUser.admin
 			});
 		}
 		else {
 			user = new User({
-				username: newUser.username
+				username: newUser.username,
+				admin: false
 			});
 		}
 		user.save(err => {
@@ -57,7 +59,8 @@ const updateUser = (userId, updatedData) => {
 			userId,
 			{
 				username: updatedData.username,
-				password: updatedData.password
+				password: updatedData.password,
+				admin: updatedData.admin
 			},
 			err => {
 				if (err) {

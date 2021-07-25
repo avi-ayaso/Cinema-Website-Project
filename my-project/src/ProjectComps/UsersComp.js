@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import UserRepeaterComp from './UserRepeaterComp';
-import { connect, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ReactPaginate from 'react-paginate';
 
 const UsersComp = props => {
@@ -24,7 +24,7 @@ const UsersComp = props => {
 
 	const displayUsers = users.slice(pagesVisited, pagesVisited + usersPerPage).map((user, index) => {
 		return (
-			<div key={index} className="user">
+			<div key={index}>
 				<UserRepeaterComp user={user} />
 				<br />
 			</div>
@@ -57,4 +57,4 @@ const UsersComp = props => {
 	);
 };
 
-export default connect()(UsersComp);
+export default UsersComp;
